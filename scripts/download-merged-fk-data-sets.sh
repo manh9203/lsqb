@@ -10,7 +10,7 @@ cd ../data
 
 for SF in 0.1 0.3; do
     echo "Downloading scale factor ${SF}"
-    curl --silent --fail https://repository.surfsara.nl/datasets/cwi/lsqb/files/lsqb-merged/social-network-sf${SF}-merged-fk.tar.zst | tar -x --use-compress-program=unzstd
+    curl --insecure --silent --fail https://repository.surfsara.nl/datasets/cwi/lsqb/files/lsqb-merged/social-network-sf${SF}-merged-fk.tar.zst | tar -x --use-compress-program=unzstd
 done
 
 for SF in 1 3 10 30 100 300 1000; do
@@ -18,5 +18,5 @@ for SF in 1 3 10 30 100 300 1000; do
         break
     fi
     echo "Downloading scale factor ${SF}"
-    curl --silent --fail https://repository.surfsara.nl/datasets/cwi/lsqb/files/lsqb-merged/social-network-sf${SF}-merged-fk.tar.zst | tar -x --use-compress-program=unzstd
+    curl --insecure --silent --fail https://repository.surfsara.nl/datasets/cwi/lsqb/files/lsqb-merged/social-network-sf${SF}-merged-fk.tar.zst | tar -x --use-compress-program=unzstd
 done
