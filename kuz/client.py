@@ -28,7 +28,7 @@ def main():
     conn = kuzu.Connection(db)
 
     with open(f"results/results.csv", "a+") as results_file:
-        for i in range(2, 8):
+        for i in range(1, 10):
             print(i)
             with open(f"kuz/q{i}.cypher", "r") as query_file:
                 run_query(conn, "", sf, i, query_file.read(), results_file)

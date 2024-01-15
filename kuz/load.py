@@ -22,8 +22,8 @@ def load_schema(conn):
 def load_lsqb_dataset(conn, sf):
     data_path = f'data/social-network-sf{sf}-projected-fk'
 
-    lsqb_node_files = ["Company", "University", "Continent", "Country", "City", "Tag", "TagClass", "Forum", "Message", "Person"]
-    lsqb_edge_files = ["Comment_replyOf_Post", "City_isPartOf_Country", "Message_hasCreator_Person", "Message_hasTag_Tag", "Message_isLocatedIn_Country", "Message_replyOf_Message", "Company_isLocatedIn_Country", "Country_isPartOf_Continent", "Forum_containerOf_Message", "Forum_hasMember_Person", "Forum_hasModerator_Person", "Forum_hasTag_Tag", "Person_hasInterest_Tag", "Person_isLocatedIn_City", "Person_knows_Person_bidirectional", "Person_likes_Message", "Person_studyAt_University", "Person_workAt_Company", "TagClass_isSubclassOf_TagClass", "Tag_hasType_TagClass", "University_isLocatedIn_City"]
+    lsqb_node_files = ["Company", "University", "Continent", "Country", "City", "Tag", "TagClass", "Forum", "Comment", "Post", "Person"]
+    lsqb_edge_files = ["City_isPartOf_Country", "Comment_hasCreator_Person", "Comment_hasTag_Tag", "Comment_isLocatedIn_Country", "Comment_replyOf_Comment", "Comment_replyOf_Post", "Company_isLocatedIn_Country", "Country_isPartOf_Continent", "Forum_containerOf_Post", "Forum_hasMember_Person", "Forum_hasModerator_Person", "Forum_hasTag_Tag", "Person_hasInterest_Tag", "Person_isLocatedIn_City", "Person_knows_Person_bidirectional", "Person_likes_Comment", "Person_likes_Post", "Person_studyAt_University", "Person_workAt_Company", "Post_hasCreator_Person", "Post_hasTag_Tag", "Post_isLocatedIn_Country", "TagClass_isSubclassOf_TagClass", "Tag_hasType_TagClass", "University_isLocatedIn_City"]
 
     load_schema(conn)
 
