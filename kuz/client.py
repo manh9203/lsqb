@@ -49,33 +49,37 @@ def main():
             print(i)
             with open(f"kuz/q{i}.cypher", "r") as query_file:
                 query_spec = query_file.read()
-                durations = []
-                memories = []
                 duration, memory, result = run_query(conn, numThreads, sf, i, query_spec, results_file)
+
                 if duration == -1:
                     results_file.write(f"KuzuDB\t{i}\t{numThreads} threads\t{sf}\tTimeout\tNA\tNA\t\n")
                     results_file.flush()
                 else:
-                    durations.append(duration)
-                    memories.append(memory)
-                    if duration <= 60:
-                        num_trials = 5
-                    else:
-                        num_trials = 3
+                    durations = [duration]
+                    memories = [memory]
+
+                    num_trials = 3
+
                     # Run the queries multiple times
-                    for j in range(1, num_trials):
+                    for _ in range(num_trials):
                         duration, memory, result = run_query(conn, numThreads, sf, i, query_spec, results_file)
                         durations.append(duration)
                         memories.append(memory)
+
                     # Get avg duration
-                    max_number = max(durations)
-                    durations.remove(max_number) # Remove the worst record
+                    max_duration = max(durations)
+                    durations.remove(max_duration) # Remove the worst record
                     duration = sum(durations) / len(durations)
-                    # Get max memory
-                    memory = max(memories)
+
+                    # Get avg memory
+                    filtered_memories = [x for x in memories if x != 0]
+                    if len(filtered_memories) == 0:
+                        memory = 0
+                    else:
+                        memory = sum(filtered_memories) / len(filtered_memories)
+                    
                     # Print the result
-                    results_file.write(f"KuzuDB\t{i}\t{numThreads} threads\t{sf}\t{duration:.4f}\t{memory / (1024 ** 3):.2f} GB\t{result[0]}\t")
-                    results_file.write(f"{num_trials} times\n")
+                    results_file.write(f"KuzuDB\t{i}\t{numThreads} threads\t{sf}\t{duration:.4f}\t{memory / (1024 ** 3):.2f} GB\t{result[0]}\n")
                     results_file.flush()
 
 if __name__ == "__main__":
